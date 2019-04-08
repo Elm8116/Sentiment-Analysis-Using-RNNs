@@ -9,6 +9,7 @@ import numpy as np
 import tensorflow as tf
 DOWNLOAD_FILENAME = 'SampleText.zip'
 
+# ****************************** Implement Word Embeddings using skip-grams ******************************
 
 
 # Download Zip file which contains the IMDB reviews and name it as SampleText.zip and it is in our local machine
@@ -45,15 +46,12 @@ vocabulary = read_words()
 
 
 # Building a dataset in a format that is useful to generate Word2Vec embedding
-
 def build_dataset(words, n_words): # n_words: Use top N frequently used word
     word_counts = [['UNKNOWN', -1]]  # word_counts contains the words and the frequency of the word
                                     # the word which is not in the top n frequency will be added to unknown count
     counter = collections.Counter(words)
     word_counts.extend(counter.most_common(n_words-1)) # Top n frequently used word
     dictionary = dict()
-
-
     # Assign unique indexes to words in the dic, the most common words have the lowest index
     for word, _ in word_counts:
         dictionary[word] = len(dictionary)  # the len of dic is increasing by one at each step
@@ -138,6 +136,6 @@ def generate_batch(word_indexes, batch_size, num_skips, skip_window):
 
 batch , labels = generate_batch(word_indexes, 10, 2, 5)
 print(batch, labels)
-for i in range(9):  # print the word and corresponding target words rather than word indexes 
+for i in range(9):  # print the word and corresponding target words rather than word indexes
     print(reversed_dictionary[batch[i]], ":", reversed_dictionary[labels[i][0]])
 
