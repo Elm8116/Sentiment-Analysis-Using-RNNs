@@ -9,7 +9,7 @@ import numpy as np
 import tensorflow as tf
 DOWNLOAD_FILENAME = 'SampleText.zip'
 
-# ****************************** Implement Word Embeddings using skip-grams ******************************
+# ****************************** A) Implement Word Embeddings using skip-grams ******************************
 
 
 # Download Zip file which contains the IMDB reviews and name it as SampleText.zip and it is in our local machine
@@ -192,7 +192,7 @@ loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=hidden_out,
 
 optimizer = tf.train.GradientDescentOptimizer(0.1).minimize(loss)
 
-# ### Checking the wordtovec algorithm works correctly
+# ### Checking the word2vec algorithm works correctly
 # ### Normalize the embeddings vector to calculate cosine similarity between words
 # *normalized_vector = vector / L2 norm of vector*
 
@@ -213,9 +213,9 @@ with tf.Session() as session:
     average_loss = 0
     for step in xrange(num_steps):
         batch_inputs, batch_labels = generate_batch(
-            word_indexes, batch_size,num_skips,skip_window)
-        feed_dic = {train_inputs:batch_inputs, train_labels: batch_labels}
-        _, loss_val = session.run([optimizer,loss], feed_dict=feed_dic)
+            word_indexes, batch_size, num_skips, skip_window)
+        feed_dic = {train_inputs: batch_inputs, train_labels: batch_labels}
+        _, loss_val = session.run([optimizer, loss], feed_dict=feed_dic)
         average_loss += loss_val
 
         if step % 2000 == 0:
